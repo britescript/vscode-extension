@@ -225,12 +225,6 @@ bun run test        # Run tests
 bun run package     # Create .vsix package
 ```
 
-## Links
-
-- 📖 [Britescript Documentation](https://britescript.dev)
-- 🛠️ [Britescript CLI](https://github.com/britescript/cli)
-- 💬 [Community Discord](https://discord.gg/britescript)
-
 ---
 
 **Happy coding with Britescript!** 🚀✨
