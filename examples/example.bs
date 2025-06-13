@@ -1,0 +1,99 @@
+// Example Britescript file to test VS Code extension
+// This showcases all the major language features
+
+// Simple struct definition
+struct User {
+  id: number;
+  name: string;
+  email: string;
+  active: boolean;
+}
+
+// Generic struct
+struct Container<T> {
+  value: T;
+  metadata: string;
+}
+
+// Trait definition
+trait Displayable {
+  display(): string;
+}
+
+// Generic trait
+trait Serializable<T> {
+  serialize(): T;
+  deserialize(data: T): void;
+}
+
+// Implementation block
+impl User {
+  create(name: string, email: string) {
+    // Implementation here
+  }
+  
+  activate() {
+    this.active = true;
+  }
+}
+
+// Trait implementation
+impl Displayable for User {
+  display() {
+    let result = this.name + " <" + this.email + ">"
+    result |> console.log
+    return result;
+  }
+}
+
+// Generic trait implementation  
+impl<T> Serializable<T> for Container<T> {
+  serialize() {
+    return JSON.stringify(this);
+  }
+  
+  deserialize(data: T) {
+    // Implementation here
+  }
+}
+
+// Let bindings with pipes
+let message = "  Hello from Britescript!  "
+message 
+  |> trim
+  |> toUpperCase
+  |> console.log
+
+// TypeScript/JavaScript code works seamlessly
+const users = [
+  { id: 1, name: "Alice", email: "alice@example.com", active: true },
+  { id: 2, name: "Bob", email: "bob@example.com", active: false }
+];
+
+function processUsers(userList: User[]) {
+  return userList.filter(u => u.active);
+}
+
+// Mixed usage
+let greeting = "Welcome to Britescript"
+greeting |> console.log
+
+// Pipe chains
+let data = {
+  name: "   John Doe   ",
+  role: "developer"
+}
+
+let processedName = data.name
+  |> trim
+  |> toLowerCase
+  |> toString
+
+processedName |> console.log
+
+// Complex example
+let announcement = "  britescript makes code beautiful  "
+announcement
+  |> trim
+  |> toUpperCase
+  |> console.log

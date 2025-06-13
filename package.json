@@ -1,0 +1,219 @@
+{
+  "name": "britescript",
+  "displayName": "Britescript",
+  "description": "Language support for Britescript - traits, structs, and clean syntax",
+  "version": "0.1.0",
+  "publisher": "britescript",
+  "icon": "images/icon_light.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/britescript/vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/britescript/vscode-extension/issues"
+  },
+  "homepage": "https://britescript.dev",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters",
+    "Other"
+  ],
+  "keywords": [
+    "britescript",
+    "typescript",
+    "traits",
+    "structs",
+    "functional",
+    "pipes"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "britescript",
+        "aliases": [
+          "Britescript",
+          "britescript",
+          "bs"
+        ],
+        "extensions": [
+          ".bs",
+          ".bsx"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/icon_light.png",
+          "dark": "./images/icon_dark.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "britescript",
+        "scopeName": "source.britescript",
+        "path": "./syntaxes/britescript.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "Britescript Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/britescript-dark.json"
+      },
+      {
+        "label": "Britescript Light",
+        "uiTheme": "vs",
+        "path": "./themes/britescript-light.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "britescript",
+        "path": "./snippets/britescript.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "britescript.compile",
+        "title": "Compile to TypeScript",
+        "category": "Britescript"
+      },
+      {
+        "command": "britescript.run",
+        "title": "Run File",
+        "category": "Britescript"
+      },
+      {
+        "command": "britescript.build",
+        "title": "Build Project",
+        "category": "Britescript"
+      },
+      {
+        "command": "britescript.newFile",
+        "title": "New Britescript File",
+        "category": "Britescript"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .bs",
+          "command": "britescript.compile",
+          "group": "britescript"
+        },
+        {
+          "when": "resourceExtname == .bs",
+          "command": "britescript.run",
+          "group": "britescript"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceExtname == .bs",
+          "command": "britescript.compile",
+          "group": "britescript"
+        },
+        {
+          "when": "resourceExtname == .bs",
+          "command": "britescript.run",
+          "group": "britescript"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "britescript.compile",
+          "when": "resourceExtname == .bs"
+        },
+        {
+          "command": "britescript.run",
+          "when": "resourceExtname == .bs"
+        },
+        {
+          "command": "britescript.build"
+        },
+        {
+          "command": "britescript.newFile"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "britescript.compile",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "resourceExtname == .bs"
+      },
+      {
+        "command": "britescript.run",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "resourceExtname == .bs"
+      },
+      {
+        "command": "britescript.build",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b",
+        "when": "workspaceContains:**/*.bs"
+      }
+    ],
+    "configuration": {
+      "title": "Britescript",
+      "properties": {
+        "britescript.executable": {
+          "type": "string",
+          "default": "brite",
+          "description": "Path to the Britescript CLI executable"
+        },
+        "britescript.autoCompile": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically compile .bs files on save"
+        },
+        "britescript.showCompiledOutput": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show TypeScript output in editor after compilation"
+        },
+        "britescript.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Britescript compiler diagnostics"
+        },
+        "britescript.formatOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Format Britescript files on save"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "bun run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "bun run compile && bun run lint",
+    "lint": "eslint src --ext ts",
+    "test": "bun ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.75.0",
+    "@types/which": "^3.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "which": "^3.0.0"
+  }
+}

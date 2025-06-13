@@ -1,0 +1,178 @@
+{
+  "Struct Definition": {
+    "prefix": "struct",
+    "body": [
+      "struct ${1:Name} {",
+      "\t${2:field}: ${3:type};",
+      "}"
+    ],
+    "description": "Create a new struct"
+  },
+  "Generic Struct": {
+    "prefix": "structg",
+    "body": [
+      "struct ${1:Container}<${2:T}> {",
+      "\t${3:value}: ${2:T};",
+      "}"
+    ],
+    "description": "Create a generic struct"
+  },
+  "Trait Definition": {
+    "prefix": "trait",
+    "body": [
+      "trait ${1:Name} {",
+      "\t${2:method}(${3:param}: ${4:type}): ${5:returnType};",
+      "}"
+    ],
+    "description": "Create a new trait"
+  },
+  "Generic Trait": {
+    "prefix": "traitg",
+    "body": [
+      "trait ${1:Container}<${2:T}> {",
+      "\t${3:method}(${4:param}: ${2:T}): ${5:returnType};",
+      "}"
+    ],
+    "description": "Create a generic trait"
+  },
+  "Implementation Block": {
+    "prefix": "impl",
+    "body": [
+      "impl ${1:StructName} {",
+      "\t${2:method}(${3:params}) {",
+      "\t\t${4:// implementation}",
+      "\t}",
+      "}"
+    ],
+    "description": "Create an implementation block"
+  },
+  "Trait Implementation": {
+    "prefix": "implfor",
+    "body": [
+      "impl ${1:TraitName} for ${2:StructName} {",
+      "\t${3:method}(${4:params}) {",
+      "\t\t${5:// implementation}",
+      "\t}",
+      "}"
+    ],
+    "description": "Implement a trait for a struct"
+  },
+  "Generic Implementation": {
+    "prefix": "implg",
+    "body": [
+      "impl<${1:T}> ${2:TraitName}<${1:T}> for ${3:StructName}<${1:T}> {",
+      "\t${4:method}(${5:params}) {",
+      "\t\t${6:// implementation}",
+      "\t}",
+      "}"
+    ],
+    "description": "Generic trait implementation"
+  },
+  "Let Binding": {
+    "prefix": "let",
+    "body": [
+      "let ${1:variable} = ${2:value}"
+    ],
+    "description": "Create a let binding"
+  },
+  "Let with Pipe": {
+    "prefix": "letp",
+    "body": [
+      "let ${1:variable} = ${2:value}",
+      "${1:variable} |> ${3:function}"
+    ],
+    "description": "Let binding with pipe operation"
+  },
+  "Pipe Chain": {
+    "prefix": "pipe",
+    "body": [
+      "${1:value}",
+      "\t|> ${2:function1}",
+      "\t|> ${3:function2}",
+      "\t|> ${4:function3}"
+    ],
+    "description": "Multi-line pipe chain"
+  },
+  "Simple Pipe": {
+    "prefix": "|>",
+    "body": [
+      "|> ${1:function}"
+    ],
+    "description": "Pipe operator"
+  },
+  "Console Log Pipe": {
+    "prefix": "log",
+    "body": [
+      "${1:value} |> console.log"
+    ],
+    "description": "Pipe to console.log"
+  },
+  "Function with Pipes": {
+    "prefix": "funcp",
+    "body": [
+      "function ${1:name}(${2:params}) {",
+      "\tlet ${3:result} = ${4:value}",
+      "\t\t|> ${5:transform1}",
+      "\t\t|> ${6:transform2};",
+      "\t",
+      "\treturn ${3:result};",
+      "}"
+    ],
+    "description": "Function using pipe operations"
+  },
+  "Britescript File Header": {
+    "prefix": "bsheader",
+    "body": [
+      "// ${1:filename} - ${2:description}",
+      "// Written in Britescript! 🚀",
+      "",
+      "${3:// Your Britescript code here}"
+    ],
+    "description": "Standard Britescript file header"
+  },
+  "Export Struct": {
+    "prefix": "exports",
+    "body": [
+      "export struct ${1:Name} {",
+      "\t${2:field}: ${3:type};",
+      "}"
+    ],
+    "description": "Export a struct"
+  },
+  "Export Trait": {
+    "prefix": "exportt",
+    "body": [
+      "export trait ${1:Name} {",
+      "\t${2:method}(${3:param}: ${4:type}): ${5:returnType};",
+      "}"
+    ],
+    "description": "Export a trait"
+  },
+  "Import Types": {
+    "prefix": "importt",
+    "body": [
+      "import { ${1:Type1}, ${2:Type2} } from \"${3:module}\";"
+    ],
+    "description": "Import types from module"
+  },
+  "Method with Return Type": {
+    "prefix": "method",
+    "body": [
+      "${1:methodName}(${2:param}: ${3:type}): ${4:returnType} {",
+      "\t${5:// implementation}",
+      "\treturn ${6:value};",
+      "}"
+    ],
+    "description": "Method with explicit return type"
+  },
+  "Async Method": {
+    "prefix": "async",
+    "body": [
+      "async ${1:methodName}(${2:param}: ${3:type}): Promise<${4:returnType}> {",
+      "\t${5:// implementation}",
+      "\treturn ${6:value};",
+      "}"
+    ],
+    "description": "Async method with Promise return type"
+  }
+}

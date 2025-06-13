@@ -1,0 +1,298 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Britescript",
+  "scopeName": "source.britescript",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#britescript-keywords" },
+    { "include": "#typescript-base" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#pipes" },
+    { "include": "#struct-definition" },
+    { "include": "#trait-definition" },
+    { "include": "#impl-definition" },
+    { "include": "#let-binding" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.britescript",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.britescript",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "britescript-keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.britescript",
+          "match": "\\b(struct|trait|impl|let|for|as|where|match|case|pipe)\\b"
+        },
+        {
+          "name": "storage.type.britescript",
+          "match": "\\b(struct|trait|impl)\\b"
+        },
+        {
+          "name": "keyword.operator.britescript",
+          "match": "\\|>"
+        }
+      ]
+    },
+    "typescript-base": {
+      "patterns": [
+        {
+          "name": "keyword.control.typescript",
+          "match": "\\b(if|else|while|for|do|break|continue|function|return|try|catch|finally|throw|switch|case|default|typeof|instanceof|in|of|new|this|super|extends|implements|interface|class|enum|namespace|module|declare|public|private|protected|static|readonly|abstract|async|await)\\b"
+        },
+        {
+          "name": "storage.type.typescript",
+          "match": "\\b(var|let|const|function|class|interface|type|enum|namespace|module)\\b"
+        },
+        {
+          "name": "support.type.typescript",
+          "match": "\\b(string|number|boolean|object|symbol|bigint|undefined|null|void|any|unknown|never)\\b"
+        },
+        {
+          "name": "constant.language.typescript",
+          "match": "\\b(true|false|null|undefined|NaN|Infinity)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.britescript",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.britescript",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.britescript",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.britescript",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.template.britescript",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "meta.embedded.expression.britescript",
+              "begin": "\\$\\{",
+              "end": "\\}",
+              "patterns": [
+                { "include": "$self" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.decimal.britescript",
+          "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+        },
+        {
+          "name": "constant.numeric.hex.britescript",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.britescript",
+          "match": "\\b0[bB][01]+\\b"
+        },
+        {
+          "name": "constant.numeric.octal.britescript",
+          "match": "\\b0[oO][0-7]+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.pipe.britescript",
+          "match": "\\|>"
+        },
+        {
+          "name": "keyword.operator.assignment.britescript",
+          "match": "=|\\+=|-=|\\*=|/=|%=|\\|=|&=|\\^=|<<=|>>="
+        },
+        {
+          "name": "keyword.operator.comparison.britescript",
+          "match": "==|!=|===|!==|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.britescript",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.arithmetic.britescript",
+          "match": "\\+|-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.bitwise.britescript",
+          "match": "&|\\||\\^|~|<<|>>"
+        }
+      ]
+    },
+    "pipes": {
+      "patterns": [
+        {
+          "name": "meta.pipe.britescript",
+          "begin": "\\|>",
+          "end": "(?=\\||;|$|\\})",
+          "patterns": [
+            {
+              "name": "entity.name.function.pipe.britescript",
+              "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+            }
+          ]
+        }
+      ]
+    },
+    "struct-definition": {
+      "patterns": [
+        {
+          "name": "meta.struct.britescript",
+          "begin": "\\b(struct)\\s+([A-Z][a-zA-Z0-9_]*)",
+          "beginCaptures": {
+            "1": { "name": "keyword.control.struct.britescript" },
+            "2": { "name": "entity.name.type.struct.britescript" }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "name": "meta.generic.britescript",
+              "begin": "<",
+              "end": ">",
+              "patterns": [
+                {
+                  "name": "entity.name.type.generic.britescript",
+                  "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+                }
+              ]
+            },
+            {
+              "name": "meta.struct.body.britescript",
+              "begin": "\\{",
+              "end": "(?=\\})",
+              "patterns": [
+                {
+                  "name": "meta.struct.field.britescript",
+                  "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*:\\s*([^;,}]+)",
+                  "captures": {
+                    "1": { "name": "variable.other.property.britescript" },
+                    "2": { "name": "entity.name.type.britescript" }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "trait-definition": {
+      "patterns": [
+        {
+          "name": "meta.trait.britescript",
+          "begin": "\\b(trait)\\s+([A-Z][a-zA-Z0-9_]*)",
+          "beginCaptures": {
+            "1": { "name": "keyword.control.trait.britescript" },
+            "2": { "name": "entity.name.type.trait.britescript" }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "name": "meta.generic.britescript",
+              "begin": "<",
+              "end": ">",
+              "patterns": [
+                {
+                  "name": "entity.name.type.generic.britescript", 
+                  "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+                }
+              ]
+            },
+            {
+              "name": "meta.trait.body.britescript",
+              "begin": "\\{",
+              "end": "(?=\\})",
+              "patterns": [
+                {
+                  "name": "meta.trait.method.britescript",
+                  "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\([^)]*\\)\\s*:\\s*([^;]+);",
+                  "captures": {
+                    "1": { "name": "entity.name.function.trait.britescript" },
+                    "2": { "name": "entity.name.type.return.britescript" }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "impl-definition": {
+      "patterns": [
+        {
+          "name": "meta.impl.britescript",
+          "begin": "\\b(impl)\\b",
+          "beginCaptures": {
+            "1": { "name": "keyword.control.impl.britescript" }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "name": "meta.impl.signature.britescript",
+              "match": "\\b(impl)\\s*(?:<([^>]+)>)?\\s*([A-Z][a-zA-Z0-9_]*)(?:<([^>]+)>)?\\s*(?:(for)\\s*([A-Z][a-zA-Z0-9_]*)(?:<([^>]+)>)?)?",
+              "captures": {
+                "1": { "name": "keyword.control.impl.britescript" },
+                "2": { "name": "entity.name.type.generic.britescript" },
+                "3": { "name": "entity.name.type.trait.britescript" },
+                "4": { "name": "entity.name.type.generic.britescript" },
+                "5": { "name": "keyword.control.for.britescript" },
+                "6": { "name": "entity.name.type.struct.britescript" },
+                "7": { "name": "entity.name.type.generic.britescript" }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "let-binding": {
+      "patterns": [
+        {
+          "name": "meta.let.britescript",
+          "begin": "\\b(let)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=",
+          "beginCaptures": {
+            "1": { "name": "keyword.control.let.britescript" },
+            "2": { "name": "variable.other.constant.britescript" }
+          },
+          "end": "(?=\\||;|$)",
+          "patterns": [
+            { "include": "$self" }
+          ]
+        }
+      ]
+    }
+  }
+}

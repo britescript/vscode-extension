@@ -1,0 +1,158 @@
+{
+  "name": "Britescript Light",
+  "type": "light",
+  "colors": {
+    "editor.background": "#ffffff",
+    "editor.foreground": "#000000",
+    "activityBar.background": "#f3f3f3",
+    "sideBar.background": "#f8f8f8",
+    "statusBar.background": "#007acc",
+    "statusBar.foreground": "#ffffff"
+  },
+  "tokenColors": [
+    {
+      "name": "Comment",
+      "scope": [
+        "comment"
+      ],
+      "settings": {
+        "fontStyle": "italic",
+        "foreground": "#008000"
+      }
+    },
+    {
+      "name": "Britescript Keywords",
+      "scope": [
+        "keyword.control.britescript",
+        "storage.type.britescript"
+      ],
+      "settings": {
+        "foreground": "#AF00DB",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Struct Name",
+      "scope": [
+        "entity.name.type.struct.britescript"
+      ],
+      "settings": {
+        "foreground": "#267F99",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Trait Name",
+      "scope": [
+        "entity.name.type.trait.britescript"
+      ],
+      "settings": {
+        "foreground": "#0070C1",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Pipe Operator",
+      "scope": [
+        "keyword.operator.pipe.britescript"
+      ],
+      "settings": {
+        "foreground": "#D73A49",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Pipe Functions",
+      "scope": [
+        "entity.name.function.pipe.britescript"
+      ],
+      "settings": {
+        "foreground": "#795E26"
+      }
+    },
+    {
+      "name": "Let Binding Variable",
+      "scope": [
+        "variable.other.constant.britescript"
+      ],
+      "settings": {
+        "foreground": "#0451A5",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "name": "Generic Types",
+      "scope": [
+        "entity.name.type.generic.britescript"
+      ],
+      "settings": {
+        "foreground": "#098658"
+      }
+    },
+    {
+      "name": "Struct Fields",
+      "scope": [
+        "variable.other.property.britescript"
+      ],
+      "settings": {
+        "foreground": "#001080"
+      }
+    },
+    {
+      "name": "Trait Methods",
+      "scope": [
+        "entity.name.function.trait.britescript"
+      ],
+      "settings": {
+        "foreground": "#795E26"
+      }
+    },
+    {
+      "name": "String",
+      "scope": [
+        "string"
+      ],
+      "settings": {
+        "foreground": "#A31515"
+      }
+    },
+    {
+      "name": "Number",
+      "scope": [
+        "constant.numeric"
+      ],
+      "settings": {
+        "foreground": "#098658"
+      }
+    },
+    {
+      "name": "TypeScript Keywords",
+      "scope": [
+        "keyword.control.typescript",
+        "storage.type.typescript"
+      ],
+      "settings": {
+        "foreground": "#0000FF"
+      }
+    },
+    {
+      "name": "Types",
+      "scope": [
+        "support.type.typescript",
+        "entity.name.type.britescript"
+      ],
+      "settings": {
+        "foreground": "#267F99"
+      }
+    },
+    {
+      "name": "Constants",
+      "scope": [
+        "constant.language"
+      ],
+      "settings": {
+        "foreground": "#0000FF"
+      }
+    }
+  ]
+}
