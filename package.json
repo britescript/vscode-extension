@@ -1,7 +1,7 @@
 {
   "name": "britescript",
   "displayName": "Britescript",
-  "description": "Language support for Britescript - traits, structs, and clean syntax",
+  "description": "Language support for Britescript - traits, structs, pipes, and JSX support",
   "version": "0.1.0",
   "publisher": "britescript",
   "icon": "images/icon_light.png",
@@ -28,7 +28,9 @@
     "traits",
     "structs",
     "functional",
-    "pipes"
+    "pipes",
+    "jsx",
+    "react"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -102,24 +104,24 @@
     "menus": {
       "explorer/context": [
         {
-          "when": "resourceExtname == .bs",
+          "when": "resourceExtname == .bs || resourceExtname == .bsx",
           "command": "britescript.compile",
           "group": "britescript"
         },
         {
-          "when": "resourceExtname == .bs",
+          "when": "resourceExtname == .bs || resourceExtname == .bsx",
           "command": "britescript.run",
           "group": "britescript"
         }
       ],
       "editor/context": [
         {
-          "when": "resourceExtname == .bs",
+          "when": "resourceExtname == .bs || resourceExtname == .bsx",
           "command": "britescript.compile",
           "group": "britescript"
         },
         {
-          "when": "resourceExtname == .bs",
+          "when": "resourceExtname == .bs || resourceExtname == .bsx",
           "command": "britescript.run",
           "group": "britescript"
         }
@@ -127,11 +129,11 @@
       "commandPalette": [
         {
           "command": "britescript.compile",
-          "when": "resourceExtname == .bs"
+          "when": "resourceExtname == .bs || resourceExtname == .bsx"
         },
         {
           "command": "britescript.run",
-          "when": "resourceExtname == .bs"
+          "when": "resourceExtname == .bs || resourceExtname == .bsx"
         },
         {
           "command": "britescript.build"
@@ -146,19 +148,19 @@
         "command": "britescript.compile",
         "key": "ctrl+shift+c",
         "mac": "cmd+shift+c",
-        "when": "resourceExtname == .bs"
+        "when": "resourceExtname == .bs || resourceExtname == .bsx"
       },
       {
         "command": "britescript.run",
         "key": "ctrl+shift+r",
         "mac": "cmd+shift+r",
-        "when": "resourceExtname == .bs"
+        "when": "resourceExtname == .bs || resourceExtname == .bsx"
       },
       {
         "command": "britescript.build",
         "key": "ctrl+shift+b",
         "mac": "cmd+shift+b",
-        "when": "workspaceContains:**/*.bs"
+        "when": "workspaceContains:**/*.bs || workspaceContains:**/*.bsx"
       }
     ],
     "configuration": {
@@ -172,7 +174,7 @@
         "britescript.autoCompile": {
           "type": "boolean",
           "default": false,
-          "description": "Automatically compile .bs files on save"
+          "description": "Automatically compile .bs and .bsx files on save"
         },
         "britescript.showCompiledOutput": {
           "type": "boolean",
@@ -187,7 +189,7 @@
         "britescript.formatOnSave": {
           "type": "boolean",
           "default": false,
-          "description": "Format Britescript files on save"
+          "description": "Format Britescript (.bs and .bsx) files on save"
         }
       }
     }

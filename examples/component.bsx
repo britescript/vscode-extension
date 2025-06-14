@@ -1,0 +1,94 @@
+// component.bsx - Example Britescript JSX Component
+// Written in Britescript with JSX! 🚀
+
+import React from 'react';
+
+// Define component props with struct
+struct UserCardProps {
+  user: User;
+  showDetails: boolean;
+  onSelect?: (user: User) => void;
+}
+
+// Define data struct
+struct User {
+  id: number;
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+// Define behavior trait
+trait Displayable {
+  getDisplayName(): string;
+  getAvatarUrl(): string;
+}
+
+// Implement trait for User
+impl Displayable for User {
+  getDisplayName() {
+    return this.name.trim().toUpperCase();
+  }
+
+  getAvatarUrl() {
+    return this.avatar || '/default-avatar.png';
+  }
+}
+
+// Main component using Britescript features
+export function UserCard(props: UserCardProps) {
+  // Use pipes for data transformation
+  let displayName = props.user.name
+    |> trim
+    |> toUpperCase;
+    
+  let avatarUrl = props.user.avatar || '/default-avatar.png'
+    |> validateUrl
+    |> addCacheBuster;
+
+  // Event handler with pipes
+  let handleClick = () => {
+    let message = "User selected: " + props.user.name
+    message |> console.log
+    
+    props.onSelect?.(props.user);
+  };
+
+  return (
+    <div 
+      className="user-card" 
+      onClick={handleClick}
+    >
+      <img 
+        src={avatarUrl} 
+        alt={displayName}
+        className="user-avatar"
+      />
+      <div className="user-info">
+        <h3>{displayName}</h3>
+        {props.showDetails && (
+          <p className="user-email">{props.user.email}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Helper functions (would be in separate module)
+function validateUrl(url: string): string {
+  return url.startsWith('http') ? url : '/default-avatar.png';
+}
+
+function addCacheBuster(url: string): string {
+  return url + '?v=' + Date.now();
+}
+
+function trim(str: string): string {
+  return str.trim();
+}
+
+function toUpperCase(str: string): string {
+  return str.toUpperCase();
+}
+
+export default UserCard;

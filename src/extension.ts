@@ -39,8 +39,8 @@ export function deactivate() {}
 
 async function compileFile(uri?: vscode.Uri) {
     const fileUri = uri || vscode.window.activeTextEditor?.document.uri;
-    if (!fileUri || !fileUri.fsPath.endsWith('.bs')) {
-        vscode.window.showErrorMessage('Please select a .bs file to compile');
+    if (!fileUri || (!fileUri.fsPath.endsWith('.bs') && !fileUri.fsPath.endsWith('.bsx'))) {
+        vscode.window.showErrorMessage('Please select a .bs or .bsx file to compile');
         return;
     }
 
@@ -67,8 +67,8 @@ async function compileFile(uri?: vscode.Uri) {
 
 async function runFile(uri?: vscode.Uri) {
     const fileUri = uri || vscode.window.activeTextEditor?.document.uri;
-    if (!fileUri || !fileUri.fsPath.endsWith('.bs')) {
-        vscode.window.showErrorMessage('Please select a .bs file to run');
+    if (!fileUri || (!fileUri.fsPath.endsWith('.bs') && !fileUri.fsPath.endsWith('.bsx'))) {
+        vscode.window.showErrorMessage('Please select a .bs or .bsx file to run');
         return;
     }
 
@@ -100,12 +100,21 @@ async function buildProject() {
 }
 
 async function createNewFile() {
+    const fileType = await vscode.window.showQuickPick([
+        { label: 'Britescript (.bs)', detail: 'Regular Britescript file', value: '.bs' },
+        { label: 'Britescript JSX (.bsx)', detail: 'Britescript with JSX support', value: '.bsx' }
+    ], {
+        placeHolder: 'Select file type to create'
+    });
+
+    if (!fileType) return;
+
     const fileName = await vscode.window.showInputBox({
         prompt: 'Enter the name for your new Britescript file',
-        placeHolder: 'example.bs',
+        placeHolder: `example${fileType.value}`,
         validateInput: (value) => {
             if (!value) return 'File name is required';
-            if (!value.endsWith('.bs')) return 'File must have .bs extension';
+            if (!value.endsWith('.bs') && !value.endsWith('.bsx')) return 'File must have .bs or .bsx extension';
             return null;
         }
     });
@@ -119,7 +128,7 @@ async function createNewFile() {
     }
 
     const filePath = path.join(workspaceFolder.uri.fsPath, fileName);
-    const template = getBritescriptTemplate(fileName);
+    const template = getBritescriptTemplate(fileName, fileType.value === '.bsx');
 
     try {
         await fs.promises.writeFile(filePath, template);
@@ -131,7 +140,7 @@ async function createNewFile() {
 }
 
 async function showCompiledOutput(fileUri: vscode.Uri) {
-    const tsPath = fileUri.fsPath.replace(/\\.bs$/, '.ts');
+    const tsPath = fileUri.fsPath.replace(/\\.(bs|bsx)$/, '.ts');
     if (fs.existsSync(tsPath)) {
         const document = await vscode.workspace.openTextDocument(tsPath);
         await vscode.window.showTextDocument(document, vscode.ViewColumn.Beside);
@@ -139,7 +148,7 @@ async function showCompiledOutput(fileUri: vscode.Uri) {
 }
 
 async function onDocumentSave(document: vscode.TextDocument) {
-    if (!document.fileName.endsWith('.bs')) return;
+    if (!document.fileName.endsWith('.bs') && !document.fileName.endsWith('.bsx')) return;
 
     const config = vscode.workspace.getConfiguration('britescript');
     if (config.get('autoCompile')) {
@@ -162,9 +171,56 @@ async function getBritescriptPath(): Promise<string> {
     }
 }
 
-function getBritescriptTemplate(fileName: string): string {
-    const name = path.basename(fileName, '.bs');
-    return `// ${fileName} - Britescript file
+function getBritescriptTemplate(fileName: string, isJSX: boolean = false): string {
+    const name = path.basename(fileName, path.extname(fileName));
+    
+    if (isJSX) {
+        return `// ${fileName} - Britescript JSX file
+// Written in Britescript with JSX! 🚀
+
+import React from 'react';
+
+// Example struct for props
+struct ${capitalize(name)}Props {
+  title: string;
+  count: number;
+  children?: React.ReactNode;
+}
+
+// Example trait
+trait Renderable {
+  render(): JSX.Element;
+}
+
+// Example implementation
+impl Renderable for ${capitalize(name)}Props {
+  render() {
+    // TODO: Implement render logic
+  }
+}
+
+// Example React component
+export function ${capitalize(name)}Component(props: ${capitalize(name)}Props) {
+  let message = "Hello from Britescript JSX!"
+  message |> console.log
+
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <p>Count: {props.count}</p>
+      {props.children}
+    </div>
+  );
+}
+
+// Example usage with pipes
+let greeting = "Welcome to Britescript JSX!"
+greeting |> console.log
+
+export default ${capitalize(name)}Component;
+`;
+    } else {
+        return `// ${fileName} - Britescript file
 // Written in Britescript! 🚀
 
 // Example struct
@@ -200,6 +256,7 @@ let data = {
 let result = "Processing: " + data.name
 result |> console.log
 `;
+    }
 }
 
 function capitalize(str: string): string {

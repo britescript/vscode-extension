@@ -174,5 +174,210 @@
       "}"
     ],
     "description": "Async method with Promise return type"
+  },
+  "React Component": {
+    "prefix": "rfc",
+    "body": [
+      "struct ${1:Component}Props {",
+      "\t${2:prop}: ${3:type};",
+      "}",
+      "",
+      "export function ${1:Component}(props: ${1:Component}Props) {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t${4:<h1>{props.${2:prop}}</h1>}",
+      "\t\t</div>",
+      "\t);",
+      "}"
+    ],
+    "description": "React functional component with Britescript struct props"
+  },
+  "React Component with Hooks": {
+    "prefix": "rfch",
+    "body": [
+      "import { useState, useEffect } from 'react';",
+      "",
+      "struct ${1:Component}Props {",
+      "\t${2:prop}: ${3:type};",
+      "}",
+      "",
+      "export function ${1:Component}(props: ${1:Component}Props) {",
+      "\tlet [${4:state}, set${4/(.*)/${4:/capitalize}/}] = useState<${5:StateType}>(${6:initialValue});",
+      "",
+      "\tuseEffect(() => {",
+      "\t\t${7:// effect logic}",
+      "\t}, []);",
+      "",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t${8:<h1>{props.${2:prop}}</h1>}",
+      "\t\t</div>",
+      "\t);",
+      "}"
+    ],
+    "description": "React component with hooks and Britescript struct props"
+  },
+  "JSX Element": {
+    "prefix": "jsx",
+    "body": [
+      "<${1:div}>",
+      "\t${2:content}",
+      "</${1:div}>"
+    ],
+    "description": "JSX element"
+  },
+  "JSX Fragment": {
+    "prefix": "frag",
+    "body": [
+      "<>",
+      "\t${1:content}",
+      "</>"
+    ],
+    "description": "JSX fragment"
+  },
+  "React Props Interface": {
+    "prefix": "props",
+    "body": [
+      "struct ${1:Component}Props {",
+      "\t${2:children}?: React.ReactNode;",
+      "\t${3:className}?: string;",
+      "\t${4:prop}: ${5:type};",
+      "}"
+    ],
+    "description": "React component props struct with common properties"
+  },
+  "Custom Hook": {
+    "prefix": "hook",
+    "body": [
+      "import { useState, useEffect } from 'react';",
+      "",
+      "struct Use${1:Hook}Options {",
+      "\t${2:option}: ${3:type};",
+      "}",
+      "",
+      "struct Use${1:Hook}Return {",
+      "\t${4:value}: ${5:type};",
+      "\t${6:method}: () => void;",
+      "}",
+      "",
+      "export function use${1:Hook}(options: Use${1:Hook}Options): Use${1:Hook}Return {",
+      "\tlet [${4:value}, set${4/(.*)/${4:/capitalize}/}] = useState<${5:type}>(${7:initialValue});",
+      "",
+      "\tlet ${6:method} = () => {",
+      "\t\t${8:// method implementation}",
+      "\t};",
+      "",
+      "\tuseEffect(() => {",
+      "\t\t${9:// effect logic}",
+      "\t}, [options.${2:option}]);",
+      "",
+      "\treturn { ${4:value}, ${6:method} };",
+      "}"
+    ],
+    "description": "Custom React hook with Britescript structs"
+  },
+  "Event Handler": {
+    "prefix": "handler",
+    "body": [
+      "let handle${1:Event} = (${2:event}: React.${3:MouseEvent}<HTMLElement>) => {",
+      "\t${4:// handler logic}",
+      "};"
+    ],
+    "description": "React event handler function"
+  },
+  "Britescript JSX Component": {
+    "prefix": "bsxcomp",
+    "body": [
+      "import React from 'react';",
+      "",
+      "struct ${1:Component}Props {",
+      "\t${2:prop}: ${3:type};",
+      "\tchildren?: React.ReactNode;",
+      "}",
+      "",
+      "trait ${4:Behavior} {",
+      "\t${5:method}(): ${6:type};",
+      "}",
+      "",
+      "impl ${4:Behavior} for ${1:Component}Props {",
+      "\t${5:method}() {",
+      "\t\t${7:// implementation}",
+      "\t}",
+      "}",
+      "",
+      "export function ${1:Component}(props: ${1:Component}Props) {",
+      "\tlet ${8:value} = props.${2:prop}",
+      "\t\t|> ${9:transform}",
+      "\t\t|> ${10:format};",
+      "",
+      "\treturn (",
+      "\t\t<${11:div}>",
+      "\t\t\t{${8:value}}",
+      "\t\t\t{props.children}",
+      "\t\t</${11:div}>",
+      "\t);",
+      "}"
+    ],
+    "description": "Complete Britescript JSX component with struct, trait, and impl"
+  },
+  "Britescript JSX File Template": {
+    "prefix": "bsxfile",
+    "body": [
+      "// ${1:ComponentName}.bsx - Britescript JSX Component",
+      "// Written in Britescript with JSX! 🚀",
+      "",
+      "import React from 'react';",
+      "",
+      "struct ${1:ComponentName}Props {",
+      "\ttitle: string;",
+      "\tchildren?: React.ReactNode;",
+      "}",
+      "",
+      "export function ${1:ComponentName}(props: ${1:ComponentName}Props) {",
+      "\tlet message = \"Hello from \" + props.title",
+      "\tmessage |> console.log",
+      "",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t<h1>{props.title}</h1>",
+      "\t\t\t{props.children}",
+      "\t\t</div>",
+      "\t);",
+      "}",
+      "",
+      "export default ${1:ComponentName};"
+    ],
+    "description": "Complete Britescript JSX file template"
+  },
+  "useState with Pipes": {
+    "prefix": "usestatep",
+    "body": [
+      "let [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState<${2:type}>(${3:initialValue});",
+      "",
+      "let handle${4:Action} = () => {",
+      "\tlet newValue = ${1:state}",
+      "\t\t|> ${5:transform}",
+      "\t\t|> ${6:validate};",
+      "\tset${1/(.*)/${1:/capitalize}/}(newValue);",
+      "};"
+    ],
+    "description": "useState hook with pipe operations"
+  },
+  "useEffect with Pipes": {
+    "prefix": "useeffectp",
+    "body": [
+      "useEffect(() => {",
+      "\tlet ${1:data} = ${2:source}",
+      "\t\t|> ${3:transform}",
+      "\t\t|> ${4:process};",
+      "\t",
+      "\t${1:data} |> console.log;",
+      "\t",
+      "\treturn () => {",
+      "\t\t${5:// cleanup}",
+      "\t};",
+      "}, [${6:dependencies}]);"
+    ],
+    "description": "useEffect hook with pipe operations"
   }
 }

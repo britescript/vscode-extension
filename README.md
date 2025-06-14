@@ -1,12 +1,13 @@
 # Britescript for VS Code
 
-Beautiful language support for Britescript - the language with traits, structs, and clean syntax that compiles to TypeScript.
+Beautiful language support for Britescript - the language with traits, structs, pipes, and JSX support that compiles to TypeScript.
 
 ## Features
 
 ### 🎨 **Syntax Highlighting**
 - Complete syntax highlighting for Britescript keywords (`struct`, `trait`, `impl`, `let`)
 - Special highlighting for pipe operators (`|>`) and pipe chains
+- Full JSX/TSX syntax support for `.bsx` files
 - Support for mixed Britescript + TypeScript/JavaScript code
 - Custom color themes optimized for Britescript
 
@@ -16,10 +17,10 @@ Beautiful language support for Britescript - the language with traits, structs, 
 - Common pipe function completions (`console.log`, `trim`, etc.)
 
 ### 🔧 **Built-in Commands**
-- **Compile File** (`Ctrl+Shift+C`): Compile `.bs` files to TypeScript
+- **Compile File** (`Ctrl+Shift+C`): Compile `.bs` and `.bsx` files to TypeScript
 - **Run File** (`Ctrl+Shift+R`): Execute Britescript files directly
 - **Build Project** (`Ctrl+Shift+B`): Build entire Britescript projects
-- **New File**: Create new `.bs` files with helpful templates
+- **New File**: Create new `.bs` or `.bsx` files with helpful templates
 
 ### 📦 **Code Snippets**
 Accelerate development with pre-built snippets:
@@ -28,6 +29,9 @@ Accelerate development with pre-built snippets:
 - `impl` - Create implementation blocks
 - `pipe` - Multi-line pipe chains
 - `let` - Let bindings with pipes
+- `rfc` - React functional components with Britescript structs
+- `bsxcomp` - Complete Britescript JSX components
+- `hook` - Custom React hooks with Britescript
 - And many more...
 
 ### 🎯 **Project Integration**
@@ -35,7 +39,7 @@ Accelerate development with pre-built snippets:
 - Integration with `brite` CLI commands
 - Workspace-aware build and run operations
 - Support for `bunfig.toml` configuration
-- Beautiful lightbulb icons for .bs files
+- Beautiful lightbulb icons for .bs and .bsx files
 
 ### ⚙️ **Customizable Settings**
 - Auto-compile on save
@@ -53,7 +57,8 @@ Accelerate development with pre-built snippets:
 
 1. **Create a new Britescript file:**
    - Use `Ctrl+Shift+P` → "Britescript: New File"
-   - Or create a file with `.bs` extension
+   - Choose between `.bs` (regular) or `.bsx` (JSX) files
+   - Or create a file with `.bs` or `.bsx` extension
 
 2. **Write some Britescript code:**
    ```britescript
@@ -82,10 +87,10 @@ Accelerate development with pre-built snippets:
 
 | Command | Keybinding | Description |
 |---------|------------|-------------|
-| Britescript: Compile | `Ctrl+Shift+C` | Compile current .bs file to TypeScript |
-| Britescript: Run | `Ctrl+Shift+R` | Execute current .bs file |
+| Britescript: Compile | `Ctrl+Shift+C` | Compile current .bs/.bsx file to TypeScript |
+| Britescript: Run | `Ctrl+Shift+R` | Execute current .bs/.bsx file |
 | Britescript: Build | `Ctrl+Shift+B` | Build entire project |
-| Britescript: New File | - | Create new .bs file with template |
+| Britescript: New File | - | Create new .bs or .bsx file with template |
 
 ## Extension Settings
 
@@ -170,6 +175,42 @@ struct Result<T, E> {
 }
 ```
 
+### JSX Components (.bsx files)
+```britescript
+// UserCard.bsx
+import React from 'react';
+
+struct UserProps {
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+trait Displayable {
+  getDisplayName(): string;
+}
+
+impl Displayable for UserProps {
+  getDisplayName() {
+    return this.name.toUpperCase();
+  }
+}
+
+export function UserCard(props: UserProps) {
+  let displayName = props.name
+    |> trim
+    |> toUpperCase;
+
+  return (
+    <div className="user-card">
+      <img src={props.avatar} alt={displayName} />
+      <h3>{displayName}</h3>
+      <p>{props.email}</p>
+    </div>
+  );
+}
+```
+
 ## Troubleshooting
 
 ### CLI Not Found
@@ -178,17 +219,18 @@ If you see "Britescript CLI not found":
 2. Or set custom path in settings: `britescript.executable`
 
 ### Compilation Errors
-- Check that your `.bs` file has valid Britescript syntax
+- Check that your `.bs` or `.bsx` file has valid Britescript syntax
 - View Problems panel (`Ctrl+Shift+M`) for detailed errors
 - Ensure all dependencies are installed
 
 ### File Association
-If `.bs` files don't open with Britescript syntax:
+If `.bs` or `.bsx` files don't open with Britescript syntax:
 1. Right-click file → "Open With..." → "Britescript"
 2. Or add to VS Code settings:
    ```json
    "files.associations": {
-     "*.bs": "britescript"
+     "*.bs": "britescript",
+     "*.bsx": "britescript"
    }
    ```
 
@@ -214,7 +256,7 @@ cd vscode-extension
 ### Testing
 1. Open project in VS Code
 2. Press `F5` to launch Extension Development Host
-3. Open `examples/example.bs` to test syntax highlighting
+3. Open `examples/example.bs` or `examples/component.bsx` to test syntax highlighting
 4. Use `Ctrl+Shift+P` → "Britescript" to test commands
 
 ### Build Scripts (using Bun)
